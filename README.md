@@ -1,7 +1,7 @@
-LogMail
+logmail
 =======
 
-LogMail is a script to email errors from journald and failed units from systemd for a specified time interval.
+logmail is a script to email errors from journald and failed units from systemd for a specified time interval.
 
 
 Usage
