@@ -7,7 +7,7 @@ logmail is a script to email errors from journald and failed units from systemd 
 Usage
 -----
 
-Edit the /etc/default/logmail script to fill in the parameters like below.
+Edit the /etc/default/logmail file to fill in the parameters like below.
 
 ```
 mailfrom="logs@example.com"
