@@ -1,5 +1,5 @@
 #!/bin/bash
-if [ "$#" -ne 2 -a "$#" -ne 3 ]; then
+if [ "$#" -ne 2 ] && [ "$#" -ne 3 ]; then
 	echo "Usage: $0 <time> <priority> [filter]"
 	echo
 	echo "Time can be specified according to the specification in 'systemd.time(7)'."
@@ -25,20 +25,20 @@ units=$(systemctl --state=failed --no-pager --no-legend | grep -v -f "$filter" 2
 message=""
 
 if [ "${#journal}" -ne 0 ]; then
-	message="$(printf "$message\n\nJournal Log\n-----------\n$journal")"
+	message="$(printf "%s\n\nJournal Log\n-----------\n%s" "$message" "$journal")"
 fi
 
 if [ "${#units}" -ne 0 ]; then
-	message="$(printf "$message\n\nFailed Units\n------------\n$units")"
+	message="$(printf "%s\n\nFailed Units\n------------\n%s" "$message" "$units")"
 fi
 
 if [ "${#message}" -ne 0 ]; then
-	message="$(printf "Details for $(hostname):$message")"
+	message="$(printf "Details for %s:%s" "$(hostname)" "$message")"
 
 	sendmail -f "$mailfrom" "$mailto" <<EOF
 From: $mailfrom
 To: $mailto
-Subject: $subject
+Subject: $(date +"$(echo "$subject" | sed -e "s/%h/$(hostname)/")")
 
 $message
 EOF
